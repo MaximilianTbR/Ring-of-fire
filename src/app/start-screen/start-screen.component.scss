@@ -11,3 +11,21 @@
         height: 100%;
     }
 }
+
+.start-label-box {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 88px;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    img {
+        width: 40vw;
+        height: auto;
+        cursor: pointer;
+        &:hover {
+            filter: brightness(1.25);
+        }
+    }
+}
