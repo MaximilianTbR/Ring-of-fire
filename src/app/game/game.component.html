@@ -2,12 +2,12 @@
 <div class="field">
     <div class="card-stack">
         <!--Card stack-->
-        <img [ngStyle]="{'right.px': i * 5}" *ngFor="let c of [0, 1, 2, 3]; let i = index;" src="./../../assets/img/card_backside.png">
-        <img (click)="takeCard()" class="top-card" style="right: 25px" src="./../../assets/img/card_backside.png">
+        <img [ngStyle]="{'right.px': i * 5}" *ngFor="let c of [0, 1, 2, 3]; let i = index;" src="assets/img/card_backside.png">
+        <img (click)="takeCard()" class="top-card" style="right: 25px" src="assets/img/card_backside.png">
         <!--Stack for played cards-->
-        <img (click)="takeCard()" *ngFor="let card of game.playedCards" class="played-card" style="right: 25px" src="./../../assets/img/PNG-cards-1.3/{{ card }}">
+        <img (click)="takeCard()" *ngFor="let card of game.playedCards" class="played-card" style="right: 25px" src="assets/img/PNG-cards-1.3/{{ card }}">
         <!--Current card (animation)-->
-        <img (click)="takeCard()" *ngIf="pickCardAnimation" class="pick-card" style="right: 25px" src="./../../assets/img/PNG-cards-1.3/{{ currentCard }}">
+        <img (click)="takeCard()" *ngIf="pickCardAnimation" class="pick-card" style="right: 25px" src="assets/img/PNG-cards-1.3/{{ currentCard }}">
     </div>
 </div>
 
