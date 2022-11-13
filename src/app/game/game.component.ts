@@ -3,7 +3,9 @@ import { Game } from 'src/models/game';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Firestore, collectionData, collection, setDoc, doc } from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, setDoc, doc, firestoreInstance$, CollectionReference, DocumentData, addDoc } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -14,24 +16,32 @@ export class GameComponent implements OnInit {
   pickCardAnimation = false;
   currentCard: any;
   game: Game;
-  coll$: any;
-  coll: any;
+  coll$: Observable<DocumentData[]>;
+  coll: CollectionReference<DocumentData>;
 
-  constructor(firestore: AngularFirestore, public dialog: MatDialog) {
-    this.coll = collection(firestore, 'games');
+  constructor(private firestore: Firestore, public dialog: MatDialog, private angularFire: AngularFirestore, private route: ActivatedRoute) {
+    this.coll = collection(this.firestore, 'games') as CollectionReference<DocumentData>;
   }
 
   ngOnInit(): void {
     this.newGame();
-    this.coll = collectionData(this.coll);
-    this.coll.subscribe((game) => {
-      alert('Neues Todo Update')
-      console.log('game update', game)
+    this.route.params.subscribe(params => {
+      this.coll$ = (collectionData(params['id']) as Observable<DocumentData[]>);
+      //this.coll$ = this.coll$.doc(params['id']);
+      this.coll$.subscribe((game: any) => {
+        this.game.currentPlayer = game.currentPlayer;
+        this.game.playedCards = game.playedCards;
+        this.game.players = game.players;
+        this.game.stack = game.stack;
+      });
     });
   }
 
-  newGame() {
+  async newGame() {
     this.game = new Game();
+    //const coll = collection(this.firestore, 'games');
+    //await addDoc(coll, { game: this.game.toJSON() });
+
   }
 
   takeCard() {
@@ -57,8 +67,5 @@ export class GameComponent implements OnInit {
       }
     });
   }
-}
-function subscribe(arg0: (game: any) => void) {
-  throw new Error('Function not implemented.');
 }
 
