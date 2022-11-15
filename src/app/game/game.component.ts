@@ -21,7 +21,7 @@ export class GameComponent implements OnInit {
   doc: DocumentReference<DocumentData>;
 
   constructor(private firestore: Firestore, public dialog: MatDialog, private angularFire: AngularFirestore, private route: ActivatedRoute) {
-    this.coll = collection(this.firestore, 'games') as CollectionReference<DocumentData>;
+    this.coll = collection(this.firestore, 'games') /*as CollectionReference<DocumentData>*/;
 
   }
 
