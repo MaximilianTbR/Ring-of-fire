@@ -15,7 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 export class GameComponent implements OnInit {
   pickCardAnimation = false;
   currentCard: any;
-  game: Game;
+  game: any = new Game;
   doc$: Observable<DocumentData>;
   coll: CollectionReference<DocumentData>;
   doc: DocumentReference<DocumentData>;
@@ -25,11 +25,37 @@ export class GameComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
-    this.newGame();
+  async ngOnInit(): Promise<void> {
+    await this.newGame();
+    await this.example()
+  }
+  ;
+  /*
+      this.newGame();
+      this.route.params.subscribe(params => {
+        this.doc = doc(this.coll, params['id']);
+        this.doc$ = (docData(this.doc) as Observable<DocumentData>);
+  
+        this.doc$.subscribe((game: any) => {
+          this.game.currentPlayer = game.currentPlayer;
+          this.game.playedCards = game.playedCards;
+          this.game.players = game.players;
+          this.game.stack = game.stack;
+        });
+      });
+      */
+
+  async newGame() {
+    this.game = new Game();
+  }
+
+  async example() {
     this.route.params.subscribe(params => {
       this.doc = doc(this.coll, params['id']);
       this.doc$ = (docData(this.doc) as Observable<DocumentData>);
+      console.log('doc$', this.doc$);
+      console.log('doc', this.doc);
+      console.log(this.game);
 
       this.doc$.subscribe((game: any) => {
         this.game.currentPlayer = game.currentPlayer;
@@ -37,12 +63,8 @@ export class GameComponent implements OnInit {
         this.game.players = game.players;
         this.game.stack = game.stack;
       });
-    });
-  }
-
-  async newGame() {
-    this.game = new Game();
-  }
+    })
+  };
 
   takeCard() {
     if (!this.pickCardAnimation) {
