@@ -15,7 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 export class GameComponent implements OnInit {
   pickCardAnimation = false;
   currentCard: any;
-  game: any = new Game;
+  game: any = new Game();
   doc$: Observable<DocumentData>;
   coll: CollectionReference<DocumentData>;
   doc: DocumentReference<DocumentData>;
