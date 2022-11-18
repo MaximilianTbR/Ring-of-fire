@@ -7,7 +7,7 @@
         <!--Stack for played cards-->
         <img (click)="takeCard()" *ngFor="let card of game.playedCards" class="played-card" style="right: 25px" src="assets/img/PNG-cards-1.3/{{ card }}">
         <!--Current card (animation)-->
-        <img (click)="takeCard()" *ngIf="pickCardAnimation" class="pick-card" style="right: 25px" src="assets/img/PNG-cards-1.3/{{ game.currentCard }}">
+        <img (click)="takeCard()" *ngIf="game.pickCardAnimation" class="pick-card" style="right: 25px" src="assets/img/PNG-cards-1.3/{{ game.currentCard }}">
     </div>
 </div>
 

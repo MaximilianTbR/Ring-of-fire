@@ -5,7 +5,6 @@ import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ActivatedRoute } from '@angular/router';
 
-
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -14,7 +13,6 @@ import { ActivatedRoute } from '@angular/router';
 export class GameComponent implements OnInit {
   game: Game;
   gameId: string;
-  pickCardAnimation: any;
 
   constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialog: MatDialog) { }
 
@@ -30,12 +28,12 @@ export class GameComponent implements OnInit {
         .doc(this.gameId)
         .valueChanges()
         .subscribe((game: any) => {
-          this.game.currentPlayer = game.game.currentPlayer;
-          this.game.playedCards = game.game.playedCards;
-          this.game.players = game.game.players;
-          this.game.stack = game.game.stack;
-          this.game.pickCardAnimation = game.game.pickCardAnimation;
-          this.game.currentCard = game.game.currentCard;
+          this.game.currentPlayer = game.currentPlayer;
+          this.game.playedCards = game.playedCards;
+          this.game.players = game.players;
+          this.game.stack = game.stack;
+          this.game.pickCardAnimation = game.pickCardAnimation;
+          this.game.currentCard = game.currentCard;
         });
     });
   }
@@ -47,7 +45,7 @@ export class GameComponent implements OnInit {
 
 
   takeCard() {
-    if (!this.pickCardAnimation) {
+    if (!this.game.pickCardAnimation) {
       this.game.currentCard = this.game.stack.pop();
       this.game.pickCardAnimation = true;
       this.game.currentPlayer++;
