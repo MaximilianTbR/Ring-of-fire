@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ActivatedRoute } from '@angular/router';
-
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -48,9 +48,10 @@ export class GameComponent implements OnInit {
     if (!this.game.pickCardAnimation) {
       this.game.currentCard = this.game.stack.pop();
       this.game.pickCardAnimation = true;
-      //this.saveGame();
       this.game.currentPlayer++;
+      console.log(this.game.currentPlayer);
       this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+      this.saveGame();
       setTimeout(() => {
         this.game.playedCards.push(this.game.currentCard);
         this.game.pickCardAnimation = false;
