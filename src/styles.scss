@@ -2,7 +2,10 @@ body {
     margin: 0;
 }
 
-html,
+html {
+    overflow: hidden;
+}
+
 body {
     height: 100%;
 }
@@ -14,7 +17,7 @@ body {
 
 @media (min-width: 720px) {
     .hide-desktop {
-        display: none;
+        display: none !important;
     }
 }
 
