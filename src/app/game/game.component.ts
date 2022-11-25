@@ -32,6 +32,7 @@ export class GameComponent implements OnInit {
           this.game.currentPlayer = game.currentPlayer;
           this.game.playedCards = game.playedCards;
           this.game.players = game.players;
+          this.game.player_images = game.player_images;
           this.game.stack = game.stack;
           this.game.pickCardAnimation = game.pickCardAnimation;
           this.game.currentCard = game.currentCard;
@@ -48,8 +49,10 @@ export class GameComponent implements OnInit {
     console.log('editPlayer' + playerId);
     const dialogRef = this.dialog.open(EditPlayerComponent);
     dialogRef.afterClosed().subscribe((change: string) => {
-      console.log('received change', change);
-      this.saveGame();
+      if (change) {
+        this.game.player_images[playerId] = change;
+        this.saveGame();
+      }
     });
   }
 
@@ -77,6 +80,7 @@ export class GameComponent implements OnInit {
     dialogRef.afterClosed().subscribe((name: string) => {
       if (name && name.length > 0) {
         this.game.players.push(name);
+        this.game.player_images.push('profile-pic-man.png');
         this.saveGame();
       }
     });
