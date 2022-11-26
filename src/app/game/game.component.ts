@@ -45,12 +45,16 @@ export class GameComponent implements OnInit {
     this.game = new Game();
   }
 
-  editPlayer(playerId: string) {
-    console.log('editPlayer' + playerId);
+  editPlayer(playerId: number) {
     const dialogRef = this.dialog.open(EditPlayerComponent);
     dialogRef.afterClosed().subscribe((change: string) => {
       if (change) {
-        this.game.player_images[playerId] = change;
+        if (change == 'Delete') {
+          this.game.players.splice(playerId, 1);
+          this.game.player_images.splice(playerId, 1);
+        } else {
+          this.game.player_images[playerId] = change;
+        }
         this.saveGame();
       }
     });
@@ -62,7 +66,6 @@ export class GameComponent implements OnInit {
       this.game.currentCard = this.game.stack.pop();
       this.game.pickCardAnimation = true;
       this.game.currentPlayer++;
-      console.log(this.game.currentPlayer);
       this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
       this.saveGame();
       setTimeout(() => {
