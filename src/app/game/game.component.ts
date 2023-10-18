@@ -14,6 +14,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 export class GameComponent implements OnInit {
   game: Game;
   gameId: string;
+  gameOver = false
 
   constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialog: MatDialog) { }
 
@@ -62,7 +63,9 @@ export class GameComponent implements OnInit {
 
 
   takeCard() {
-    if (!this.game.pickCardAnimation) {
+    if (this.game.stack.length == 0) {
+      this.gameOver = true;
+    } else if (!this.game.pickCardAnimation) {
       this.game.currentCard = this.game.stack.pop();
       this.game.pickCardAnimation = true;
       this.game.currentPlayer++;
@@ -75,7 +78,6 @@ export class GameComponent implements OnInit {
       }, 1500);
     }
   }
-
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddPlayerComponent);
